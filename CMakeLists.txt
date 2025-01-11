@@ -31,6 +31,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 #target_include_directories( ${EIGEN3_INCLUDE_DIR})
 
+
 target_link_libraries(
     ${TEST_NAME} PRIVATE 
     GTest::gtest 
@@ -38,10 +39,18 @@ target_link_libraries(
     GTest::gmock 
     GTest::gmock_main
 )
+
+target_include_directories(
+    ${TARGET_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/SIMDxorshift/include
+)
+
+message(${CMAKE_CURRENT_BINARY_DIR})
 #
 target_link_libraries(
     ${TARGET_NAME} PRIVATE
     spdlog::spdlog
+    ${CMAKE_CURRENT_BINARY_DIR}/simdxorshift128plus.o
 )
 
 include(GoogleTest)

@@ -1,16 +1,51 @@
 {
-  "version": 2,
-  "configurePresets": [
+    "version": 2,
+    "configurePresets": [
     {
-      "name": "default",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-      }
+        "name": "default",
+        "displayName": "Default config -- do not use directly, it is meant to be inherited.",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake",
+            "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+            "VCPKG_LIBRARY_LINKAGE": "static"
+        }
+    },
+    {
+        "name": "debug",
+        "displayName": "Debug config -- do not use directly, it is meant to be inherited.",
+        "inherits": ["default"],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Debug"
+        }
+    },
+    {
+        "name": "release",
+        "displayName": "Release config -- do not use directly, it is meant to be inherited.",
+        "inherits": ["default"],
+        "cacheVariables": {
+            "CMAKE_BUILD_TYPE": "Release"
+        }
+    },
+    {
+        "name": "clang-debug",
+        "displayName": "Clang Debug Config",
+        "inherits": ["debug"],
+        "cacheVariables": {
+            "CMAKE_CXX_FLAGS": "-g -O0 -march=native -Wconversion -Wsign-conversion -Wall -Wextra"
+        }
+    },
+    {
+        "name": "clang-release",
+        "displayName": "OSX Release Config",
+        "inherits": ["release"],
+        "cacheVariables": {
+            "CMAKE_CXX_FLAGS": "-Ofast -march=native -ffast-math -flto"
+        }
+
     }
-  ]
+]
 }
 
 
